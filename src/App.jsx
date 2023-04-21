@@ -1,4 +1,6 @@
 import React from 'react';
+import { TodoItem } from './components/TodoItem';
+import { TodoList } from './components/TodoList';
 /*import { TodoCounter } from './TodoCounter';
 import { TodoSearch } from './TodoSearch';
 import { TodoList } from './TodoList';
@@ -18,7 +20,7 @@ function App() {
     <React.Fragment>
       {/* <TodoCounter />
       <TodoSearch />
-
+*/
       <TodoList>
         {todos.map(todo => (
           <TodoItem
@@ -28,7 +30,7 @@ function App() {
           />
         ))}
       </TodoList>
-
+/*
       <CreateTodoButton />*/}
     </React.Fragment>
   );

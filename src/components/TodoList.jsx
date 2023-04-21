@@ -1,5 +1,5 @@
 import React from 'react';
-import './TodoList.css'
+import '../stylos/TodoList.css'
 
 function TodoList(props) {
   return (
