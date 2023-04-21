@@ -1,20 +1,14 @@
 import React from 'react';
-import './TodoItem.css';
+import './TodoList.css'
 
-function TodoItem(props) {
+function TodoList(props) {
   return (
-    <li className="TodoItem">
-      <span className={`Icon Icon-check ${props.completed && 'Icon-check--active'}`}>
-        √
-      </span>
-      <p className={`TodoItem-p ${props.completed && 'TodoItem-p--complete'}`}>
-        {props.text}
-      </p>
-      <span className="Icon Icon-delete">
-        X
-      </span>
-    </li>
+    <section>
+      <ul>
+        {props.children}
+      </ul>
+    </section>
   );
 }
 
-export { TodoItem };
+export { TodoList };
