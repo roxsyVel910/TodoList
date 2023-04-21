@@ -1,6 +1,10 @@
 import React from 'react';
 import { TodoItem } from './components/TodoItem';
 import { TodoList } from './components/TodoList';
+import { TodoCounter } from './components/TodoCounter';
+import { TodoSearch } from './components/TodoSearch';
+import { CreateTodoButton } from './components/CreateTodoButton';
+
 /*import { TodoCounter } from './TodoCounter';
 import { TodoSearch } from './TodoSearch';
 import { TodoList } from './TodoList';
@@ -18,9 +22,8 @@ const todos = [
 function App() {
   return (
     <React.Fragment>
-      {/* <TodoCounter />
+       <TodoCounter />
       <TodoSearch />
-*/
       <TodoList>
         {todos.map(todo => (
           <TodoItem
@@ -30,8 +33,8 @@ function App() {
           />
         ))}
       </TodoList>
-/*
-      <CreateTodoButton />*/}
+
+      <CreateTodoButton />
     </React.Fragment>
   );
 }
