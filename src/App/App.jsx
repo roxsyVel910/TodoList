@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { TodoItem } from './components/TodoItem';
-import { TodoList } from './components/TodoList';
-import { TodoCounter } from './components/TodoCounter';
-import { TodoSearch } from './components/TodoSearch';
-import { CreateTodoButton } from './components/CreateTodoButton';
+import { TodoItem } from '../TodoItem';
+import { TodoList } from '../TodoList';
+import { TodoCounter } from '../TodoCounter';
+import { TodoSearch } from '../TodoSearch';
+import { CreateTodoButton } from '../CreateTodoButton';
+
+
 
 /*import { TodoCounter } from './TodoCounter';
 import { TodoSearch } from './TodoSearch';
