@@ -1,22 +1,23 @@
 import React from 'react';
 import '../stylos/TodoSearch.css';
 
-function TodoSearch() {
-    const [seacrhValue, setSearchValue] = React.useState('');
+function TodoSearch({searchValue, setSearchValue}) {
+    
 
   const onSearchValueChange = (event) => {
     console.log(event.target.value);
     setSearchValue(event.target.value);
   };
   
-  return [
+  return (
     <input
       className="TodoSearch"
       placeholder="Cebolla"
+      value = {searchValue}
       onChange={onSearchValueChange}
-    />,
-    <p>{seacrhValue}</p>
-  ];
+    />
+   
+  );
 }
 
 export { TodoSearch };
