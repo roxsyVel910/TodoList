@@ -1,16 +1,28 @@
 import React from "react";
 import {AppUI} from "./appUI";
 
-const defaultTodos = [
+/*const defaultTodos = [
     { text: 'Cortar cebolla', completed: true },
     { text: 'Tomar el cursso de intro a React', completed: false },
     { text: 'Llorar con la llorona', completed: false },
     { text: 'LALALALAA', completed: false },
-  ];
+  ];*/
   
   function App() {
+    const localStorageTodos = localStorage.getItem('TODOS_V1');
+    let parsedTodos;
+    if(!localStorageTodos){
+        localStorage.setItem('TODOS_V1', JSON.stringify([]));
+        parsedTodos = [];
+
+    }else{
+        parsedTodos = JSON.parse(localStorageTodos)
+
+    }
+
+
     
-    const [ todos, setTodos] = React.useState(defaultTodos);
+    const [ todos, setTodos] = React.useState(parsedTodos);
   
     const [searchValue, setSearchValue] = React.useState('')
     // Cantidad de TODOs completados
@@ -30,19 +42,38 @@ const defaultTodos = [
   
       });
     }
-  
+
+    // Creamos la función en la que actualizaremos nuestro localStorage
+
+    const saveTodos = (newTodos) => {
+        // Convertimos a string nuestros TODOs
+
+        const stringifiedTodos = JSON.stringify(newTodos);
+            // Los guardamos en el localStorage
+
+        localStorage.setItem('TODOS_V1', stringifiedTodos);
+            // Actualizamos nuestro estado
+
+        setTodos(newTodos);
+    };
+
+
     const completeTodo = (text) => {
       const todoIndex = todos.findIndex(todo => todo.text === text);
       const newTodos = [... todos];
       todos[todoIndex].completed = true;
-      setTodos(newTodos);
+
+       // Cada que el usuario interactúe con nuestra aplicación se guardarán los TODOs con nuestra nueva función
+
+      saveTodos(newTodos);
   
     }
     const deleteTodo = (text) => {
       const todoIndex = todos.findIndex(todo => todo.text === text);
       const newTodos = [... todos];
       newTodos.splice(todoIndex, 1);
-      setTodos(newTodos);
+      // Cada que el usuario interactúe con nuestra aplicación se guardarán los TODOs con nuestra nueva función
+      saveTodos(newTodos);
   
     }
    
