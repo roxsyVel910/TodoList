@@ -1,96 +1,101 @@
 import React from "react";
 import {AppUI} from "./appUI";
 
-/*const defaultTodos = [
+const defaultItem = [
     { text: 'Cortar cebolla', completed: true },
     { text: 'Tomar el cursso de intro a React', completed: false },
     { text: 'Llorar con la llorona', completed: false },
     { text: 'LALALALAA', completed: false },
-  ];*/
-  
-  function App() {
-    const localStorageTodos = localStorage.getItem('TODOS_V1');
-    let parsedTodos;
-    if(!localStorageTodos){
-        localStorage.setItem('TODOS_V1', JSON.stringify([]));
-        parsedTodos = [];
+  ];
 
-    }else{
-        parsedTodos = JSON.parse(localStorageTodos)
-
-    }
-
-
+  // Recibimos como parámetros el nombre y el estado inicial de nuestro item.
+function useLocalStorage(itemName, initialValue) {
+    // Guardamos nuestro item en una constante
+    const localStorageItem = localStorage.getItem(itemName);
+    let parsedItem;
     
-    const [ todos, setTodos] = React.useState(parsedTodos);
+    // Utilizamos la lógica que teníamos, pero ahora con las variables y parámentros nuevos
+    if (!localStorageItem) {
+      localStorage.setItem(itemName, JSON.stringify(initialValue));
+      parsedItem = initialValue;
+    } else {
+      parsedItem = JSON.parse(localStorageItem);
+    }
+    
+    // ¡Podemos utilizar otros hooks!
+    const [item, setItem] = React.useState(parsedItem);
   
-    const [searchValue, setSearchValue] = React.useState('')
-    // Cantidad de TODOs completados
-    const completedTodos = todos.filter(todo => !!todo.completed).length;
-    // Cantidad total de TODOs
-    const totalTodos = todos.length;
+    // Actualizamos la función para guardar nuestro item con las nuevas variables y parámetros
+    const saveItem = (newItem) => {
+      const stringifiedItem = JSON.stringify(newItem);
+      localStorage.setItem(itemName, stringifiedItem);
+      setItem(newItem);
+    };
+  
+    // Regresamos los datos que necesitamos
+    return [
+      item,
+      saveItem,
+    ];
+  } 
+  function App() {
+    const [patito, savePatito] = useLocalStorage('PATITO_V1', 'FERNANDO');
+    // Desestructuramos los datos que retornamos de nuestro custom hook, y le pasamos los argumentos que necesitamos (nombre y estado inicial)
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', []);
+  const [searchValue, setSearchValue] = React.useState('');
+
+  // Cantidad de Item completados
+  const completedTodos = todos.filter(todo => !!todo.completed).length;
+  // Cantidad total de Item
+  const totalTodos = todos.length;
+
+  
+    
   
     let searchedTodos = [];
   
-    if(!searchValue.length >= 1){
+    if (!searchValue.length >= 1) {
       searchedTodos = todos;
     } else {
       searchedTodos = todos.filter(todo => {
         const todoText = todo.text.toLowerCase();
         const searchText = searchValue.toLowerCase();
-        return todoText.includes(searchText)
-  
+        return todoText.includes(searchText);
       });
     }
 
     // Creamos la función en la que actualizaremos nuestro localStorage
 
-    const saveTodos = (newTodos) => {
-        // Convertimos a string nuestros TODOs
-
-        const stringifiedTodos = JSON.stringify(newTodos);
-            // Los guardamos en el localStorage
-
-        localStorage.setItem('TODOS_V1', stringifiedTodos);
-            // Actualizamos nuestro estado
-
-        setTodos(newTodos);
-    };
-
+    
 
     const completeTodo = (text) => {
       const todoIndex = todos.findIndex(todo => todo.text === text);
-      const newTodos = [... todos];
-      todos[todoIndex].completed = true;
-
-       // Cada que el usuario interactúe con nuestra aplicación se guardarán los TODOs con nuestra nueva función
-
+      const newTodos = [...todos];
+      newTodos[todoIndex].completed = true;
       saveTodos(newTodos);
+    };
   
-    }
     const deleteTodo = (text) => {
       const todoIndex = todos.findIndex(todo => todo.text === text);
-      const newTodos = [... todos];
+      const newTodos = [...todos];
       newTodos.splice(todoIndex, 1);
-      // Cada que el usuario interactúe con nuestra aplicación se guardarán los TODOs con nuestra nueva función
       saveTodos(newTodos);
-  
-    }
+    };
    
   
   
-    return (
+    return [
+      <p>{patito}</p>,
       <AppUI
-      totalTodos={totalTodos}
-      completedTodos={completedTodos}
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-      searchedTodos={searchedTodos}
-      completeTodo={completeTodo}
-      deleteTodo={deleteTodo}
-
-      />
-    );
+        totalTodos={totalTodos}
+        completedTodos={completedTodos}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        searchedTodos={searchedTodos}
+        completeTodo={completeTodo}
+        deleteTodo={deleteTodo}
+      />,
+    ];
   }
   
   export default App;
