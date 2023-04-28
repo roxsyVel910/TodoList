@@ -6,6 +6,7 @@ import { TodoCounter } from "../TodoCounter";
 import { TodoSearch } from "../TodoSearch";
 import { CreateTodoButton } from "../CreateTodoButton";
 import { Modal } from "../Modal";
+import TodoForm from "../TodoForm";
 
 function AppUI() {
 
@@ -40,7 +41,7 @@ function AppUI() {
       </TodoList>
       { !!openModal && (
         <Modal>
-        <p>Teletras`prtacion</p>
+        <TodoForm></TodoForm>
         </Modal>
       )}
           

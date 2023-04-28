@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 const TodoContext = React.createContext();
 
-function TodoProvider(props){
-// Desestructuramos los datos que retornamos de nuestro custom hook, y le pasamos los argumentos que necesitamos (nombre y estado inicial)
+function TodoProvider(props) {
+  // Desestructuramos los datos que retornamos de nuestro custom hook, y le pasamos los argumentos que necesitamos (nombre y estado inicial)
   const {
     item: todos,
     saveItem: saveTodos,
     loading,
     error,
-  } = useLocalStorage('TODOS_V1', []);
+  } = useLocalStorage("TODOS_V1", []);
   const [searchValue, setSearchValue] = React.useState("");
-  const [openModal, setOpenModal] = React.useState(false)
+  const [openModal, setOpenModal] = React.useState(false);
 
   // Cantidad de Item completados
   const completedTodos = todos.filter((todo) => !!todo.completed).length;
@@ -29,6 +29,15 @@ function TodoProvider(props){
       return todoText.includes(searchText);
     });
   }
+  // Función para añadir un nuevo TODO
+  const addTodo = (text) => {
+    const newTodos = [...todos];
+    newTodos.push({
+      completed: false,
+      text,
+    });
+    saveTodos(newTodos);
+  };
 
   // Creamos la función en la que actualizaremos nuestro localStorage
 
@@ -45,14 +54,15 @@ function TodoProvider(props){
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos);
   };
- /* console.log("antes");
+  /* console.log("antes");
   useEffect(() => {
     console.log("use effect");
   }, [totalTodos]);
   console.log("despues");*/
 
   return (
-    <TodoContext.Provider value={{
+    <TodoContext.Provider
+      value={{
         loading,
         error,
         totalTodos,
@@ -63,11 +73,12 @@ function TodoProvider(props){
         completeTodo,
         deleteTodo,
         openModal,
-        setOpenModal
-    }}>
-    {props.children}
+        setOpenModal,
+        addTodo
+      }}
+    >
+      {props.children}
     </TodoContext.Provider>
   );
-   
 }
 export { TodoContext, TodoProvider };
