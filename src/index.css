@@ -4,10 +4,13 @@ body {
   background: #F2F4F5;
   color: #1E1E1F;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
 }
 
 #root {
   margin: 0 24px;
   position: relative;
   min-height: 100vh;
+  width:50%;
 }
