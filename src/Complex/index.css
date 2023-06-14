@@ -1,0 +1,6 @@
+.header-title {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    color: #58587C;
+}
